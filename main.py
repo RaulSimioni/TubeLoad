@@ -22,7 +22,7 @@ class menu:
 
             layout = [[sg.Text("                                 YOUTUBE VIDEO DOWNLOADER BY: RAULZIN             ")],
 
-                [sg.Text("                                                              APLHA BUILD 2.0")],
+                [sg.Text("                                                              BUILD 3.0")],
 
                 [sg.Text("")],
 
@@ -61,7 +61,6 @@ class menu:
                     download_dir = QueryValueEx(reg_key, "{374DE290-123F-4565-9164-39C4925E467B}")[0]
                     return download_dir
             except Exception as e:
-                print("Erro!! OS LINUX!!", e)
                 return GetLinuxPath()
         
         def GetLinuxPath():
@@ -81,14 +80,10 @@ class menu:
                 
 
                 if button == 'Baixar':
-
                     video = YouTube(values[0])
                     stream = video.streams.get_highest_resolution()
-
                     stream.download(download_dir)
                     break
-                    
-
                 elif button == 'Sair' or sg.WINDOW_CLOSE_ATTEMPTED_EVENT:
 
                     break
