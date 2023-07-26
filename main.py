@@ -5,6 +5,8 @@ from pytube import YouTube
 
 import pytube.exceptions as exceptions
 
+import os
+
  
 
 class menu:
@@ -51,13 +53,31 @@ class menu:
 
             return sg.Window('Erro !', layout=erro, finalize=True)
 
- 
+        def GetWindowsPath():
+            try:
+                from winreg import HKEY_CURRENT_USER, ConnectRegistry, OpenKey, QueryValueEx
+                key = r"Software\\Microsoft\Windows\\CurrentVersion\\Explorer\\Shell Folders"
+                with OpenKey(ConnectRegistry(None, HKEY_CURRENT_USER), key) as reg_key:
+                    download_dir = QueryValueEx(reg_key, "{374DE290-123F-4565-9164-39C4925E467B}")[0]
+                    return download_dir
+            except Exception as e:
+                print("Erro!! OS LINUX!!", e)
+                return GetLinuxPath()
+        
+        def GetLinuxPath():
+            try:
+                download_dir = os.path.expanduser("~/Downloads")
+                return download_dir
+            except Exception as e:
+                print("Erro ao obter diretório de download no Linux:", e)
+            return None
 
         try:
             
             while True:
                 janela1,janela= JanelaPrincipal(), None
                 window, button, values = sg.read_all_windows()
+                download_dir = GetWindowsPath()
                 
 
                 if button == 'Baixar':
@@ -65,7 +85,7 @@ class menu:
                     video = YouTube(values[0])
                     stream = video.streams.get_highest_resolution()
 
-                    stream.download('/home/raulraro/Desktop')
+                    stream.download(download_dir)
                     break
                     
 
@@ -113,4 +133,3 @@ class menu:
            
  
 tela = menu()
-
