@@ -80,13 +80,13 @@ class menu:
                 
 
                 if button == 'Baixar':
-                    video = YouTube(values[0])
+                    video = YouTube(values[0], use_oauth=True, allow_oauth_cache=True)
                     stream = video.streams.get_highest_resolution()
                     stream.download(download_dir)
                     break
                 elif button == 'Sair' or sg.WINDOW_CLOSE_ATTEMPTED_EVENT:
-
                     break
+            
 
         except exceptions.RegexMatchError as a:
              
@@ -103,6 +103,8 @@ class menu:
                     break
 
                 if window == erroReg and sg.WINDOW_CLOSE_ATTEMPTED_EVENT:
+                    janela1.close()
+                    erroReg.close()
                     break
              menu()
 
