@@ -1,7 +1,7 @@
 
 import PySimpleGUI as sg
 
-from pytube import YouTube
+from pytube import *
 
 import pytube.exceptions as exceptions
 
@@ -80,7 +80,7 @@ class menu:
                 
 
                 if button == 'Baixar':
-                    video = YouTube(values[0], use_oauth=True, allow_oauth_cache=True)
+                    video = YouTube(values[0], use_oauth=False, allow_oauth_cache=True)
                     stream = video.streams.get_highest_resolution()
                     stream.download(download_dir)
                     break
