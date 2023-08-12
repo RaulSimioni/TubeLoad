@@ -80,7 +80,8 @@ class menu:
                 
 
                 if button == 'Baixar':
-                    video = YouTube(values[0], use_oauth=True, allow_oauth_cache=True)
+                    video = YouTube(values[0], use_oauth=False, allow_oauth_cache=True)
+                    video.check_availability()
                     stream = video.streams.get_highest_resolution()
                     stream.download(download_dir)
                     break
